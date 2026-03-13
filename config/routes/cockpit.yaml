@@ -1,0 +1,4 @@
+cockpit_home:
+    path: /cockpit
+    controller: App\UI\Controller\CockpitController::index
+    methods: [GET]
