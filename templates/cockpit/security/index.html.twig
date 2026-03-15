@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Security Cockpit 4K{% endblock %}
+
+{% block body %}
+<div id="cockpit-4k" style="padding:20px; font-family:Arial;">
+
+    <h1 style="font-size:32px; margin-bottom:20px;">
+        MIDDO OS – Security Cockpit 4K
+    </h1>
+
+    <div id="global-risk" style="margin-bottom:30px;">
+        <h2>Global Risk</h2>
+        <pre id="risk-data"></pre>
+    </div>
+
+    <div id="alerts" style="margin-bottom:30px;">
+        <h2>Alerts</h2>
+        <pre id="alerts-data"></pre>
+    </div>
+
+    <div id="correlation" style="margin-bottom:30px;">
+        <h2>Correlation</h2>
+        <pre id="correlation-data"></pre>
+    </div>
+
+    <div id="timeline" style="margin-bottom:30px;">
+        <h2>Timeline</h2>
+        <pre id="timeline-data"></pre>
+    </div>
+
+    <div id="heatmap" style="margin-bottom:30px;">
+        <h2>Heatmap</h2>
+        <pre id="heatmap-data"></pre>
+    </div>
+
+    <div id="graph" style="margin-bottom:30px;">
+        <h2>Threat Graph</h2>
+        <pre id="graph-data"></pre>
+    </div>
+
+    <div id="logs" style="margin-bottom:30px;">
+        <h2>Logs</h2>
+        <pre id="logs-data"></pre>
+    </div>
+
+</div>
+
+<script>
+    fetch('/cockpit/security')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('risk-data').textContent = JSON.stringify(data.global_risk, null, 2);
+            document.getElementById('alerts-data').textContent = JSON.stringify(data.alerts, null, 2);
+            document.getElementById('correlation-data').textContent = JSON.stringify(data.correlation, null, 2);
+            document.getElementById('timeline-data').textContent = JSON.stringify(data.timeline, null, 2);
+            document.getElementById('heatmap-data').textContent = JSON.stringify(data.heatmap, null, 2);
+            document.getElementById('graph-data').textContent = JSON.stringify(data.graph, null, 2);
+            document.getElementById('logs-data').textContent = JSON.stringify(data.logs, null, 2);
+        });
+</script>
+
+{% endblock %}

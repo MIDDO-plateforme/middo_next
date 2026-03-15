@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Security Cockpit 4K – Premium{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background: #0d1117;
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .glass {
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+        font-size: 42px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    pre {
+        background: rgba(0,0,0,0.3);
+        padding: 15px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 14px;
+    }
+
+    #grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div style="padding:40px;">
+
+    <h1>MIDDO OS – Security Cockpit 4K (Premium)</h1>
+
+    <div id="grid">
+
+        <div class="glass">
+            <h2>Global Risk</h2>
+            <pre id="risk-data"></pre>
+        </div>
+
+        <div class="glass">
+            <h2>Alerts</h2>
+            <pre id="alerts-data"></pre>
+        </div>
+
+        <div class="glass">
+            <h2>Correlation</h2>
+            <pre id="correlation-data"></pre>
+        </div>
+
+        <div class="glass">
+            <h2>Timeline</h2>
+            <pre id="timeline-data"></pre>
+        </div>
+
+        <div class="glass">
+            <h2>Heatmap</h2>
+            <pre id="heatmap-data"></pre>
+        </div>
+
+        <div class="glass">
+            <h2>Threat Graph</h2>
+            <pre id="graph-data"></pre>
+        </div>
+
+        <div class="glass" style="grid-column: span 3;">
+            <h2>Logs</h2>
+            <pre id="logs-data"></pre>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    fetch('/cockpit/security')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('risk-data').textContent = JSON.stringify(data.global_risk, null, 2);
+            document.getElementById('alerts-data').textContent = JSON.stringify(data.alerts, null, 2);
+            document.getElementById('correlation-data').textContent = JSON.stringify(data.correlation, null, 2);
+            document.getElementById('timeline-data').textContent = JSON.stringify(data.timeline, null, 2);
+            document.getElementById('heatmap-data').textContent = JSON.stringify(data.heatmap, null, 2);
+            document.getElementById('graph-data').textContent = JSON.stringify(data.graph, null, 2);
+            document.getElementById('logs-data').textContent = JSON.stringify(data.logs, null, 2);
+        });
+</script>
+
+{% endblock %}
